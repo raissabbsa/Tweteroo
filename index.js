@@ -11,17 +11,18 @@ const tweetComplete = []
 
 
 app.post("/tweets" , (req,res) => {
+    const {username, tweet} = req.body
     const newObject={
-        username: req.body.username,
-        tweet: req.body.tweet
+        username: username,
+        tweet: tweet
     }
     tweets.push(newObject)
     const newAvatar = user.find(u => u.username ===newObject.username)
     if(newAvatar){
         const newTweet = {
-            username: newObject.username,
+            username: username,
             avatar: newAvatar.avatar,
-            tweet: newObject.tweet
+            tweet: tweet
         } 
         tweetComplete.push(newTweet)
     }
@@ -43,9 +44,10 @@ app.get("/tweets", (req,res) => {
 })
 
 app.post("/sign-up", (req,res)  => {
+    const {username, avatar} = req.body
     const newUser = {
-        username: req.body.username,
-        avatar: req.body.avatar
+        username: username,
+        avatar: avatar
     }
     user.push(newUser)
     res.send("OK")
