@@ -12,6 +12,10 @@ const tweetComplete = []
 
 app.post("/tweets" , (req,res) => {
     const {username, tweet} = req.body
+    if(!username||!tweet){
+        res.sendStatus(400).send({message: "Todos os campos são obrigatórios!"})
+        return
+    }
     const newObject={
         username: username,
         tweet: tweet
@@ -30,6 +34,20 @@ app.post("/tweets" , (req,res) => {
     res.send("OK")
 })
 
+app.post("/sign-up", (req,res)  => {
+    const {username, avatar} = req.body
+    if(!username||!avatar){
+        res.sendStatus(400).send({message: "Todos os campos são obrigatórios!"})
+        return
+    }
+    const newUser = {
+        username: username,
+        avatar: avatar
+    }
+    user.push(newUser)
+    res.send("OK")
+})
+
 app.get("/tweets", (req,res) => {
 
     if(tweetComplete.length<=10){
@@ -43,14 +61,10 @@ app.get("/tweets", (req,res) => {
     res.send(tweetsList)
 })
 
-app.post("/sign-up", (req,res)  => {
-    const {username, avatar} = req.body
-    const newUser = {
-        username: username,
-        avatar: avatar
-    }
-    user.push(newUser)
-    res.send("OK")
+app.get("/tweets/:username", (req,res) => {
+    const username = req.params.username
+    const tweetsFiltered = tweetComplete.filter(tweet => tweet.username === username)
+    res.send(tweetsFiltered)
 })
 
 
