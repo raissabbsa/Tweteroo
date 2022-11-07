@@ -5,12 +5,8 @@ const app = express()
 app.use(cors())
 app.use(express.json());
 
-const tweets = [
-    {username: "bobesponja",tweet: "eu amo o hub"},
-]
-const user = [
-    {username: 'bobesponja', avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info"}
-]
+const tweets = []
+const user = []
 const tweetComplete = []
 
 
@@ -22,11 +18,11 @@ app.post("/tweets" , (req,res) => {
     tweets.push(newObject)
     const newAvatar = user.find(u => u.username ===newObject.username)
     if(newAvatar){
-        const newTweet = [{
+        const newTweet = {
             username: newObject.username,
             avatar: newAvatar.avatar,
             tweet: newObject.tweet
-        }]  
+        } 
         tweetComplete.push(newTweet)
     }
 
